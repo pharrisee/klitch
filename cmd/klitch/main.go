@@ -17,7 +17,7 @@ func main() {
 			stdErr(c, err)
 			return
 		}
-		data := map[string]any{"title": "Klitch", "now": time.Now()}
+		data := gin.H{"title": "Klitch", "now": time.Now()}
 		if err := t.Execute(c.Writer, data); err != nil {
 			stdErr(c, err)
 			return
@@ -30,7 +30,7 @@ func main() {
 			stdErr(c, err)
 			return
 		}
-		data := map[string]any{"now": time.Now()}
+		data := gin.H{"now": time.Now()}
 		if err := t.Execute(c.Writer, data); err != nil {
 			stdErr(c, err)
 			return
