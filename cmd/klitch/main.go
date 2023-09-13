@@ -12,7 +12,11 @@ func main() {
 	g := gin.Default()
 
 	g.GET("/", func(c *gin.Context) {
-		t := template.Must(template.ParseFiles("content/views/index.html"))
+		t, err := template.ParseFiles("content/views/index.html")
+		if err != nil {
+			stdErr(c, err)
+			return
+		}
 		data := map[string]any{"title": "Klitch", "now": time.Now()}
 		if err := t.Execute(c.Writer, data); err != nil {
 			stdErr(c, err)
@@ -20,7 +24,11 @@ func main() {
 	})
 
 	g.GET("/htmx/time", func(c *gin.Context) {
-		t := template.Must(template.ParseFiles("content/views/htmx/time.html"))
+		t, err := template.ParseFiles("content/views/htmx/time.html")
+		if err != nil {
+			stdErr(c, err)
+			return
+		}
 		data := map[string]any{"now": time.Now()}
 		if err := t.Execute(c.Writer, data); err != nil {
 			stdErr(c, err)
