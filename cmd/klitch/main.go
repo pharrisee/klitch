@@ -1,46 +1,19 @@
 package main
 
 import (
-	"html/template"
 	"log"
-	"time"
 
 	"github.com/gin-gonic/gin"
+	"github.com/pharrisee/klitch/internal/handlers"
 )
 
 func main() {
 	g := gin.Default()
 
-	g.GET("/", func(c *gin.Context) {
-		t, err := template.ParseFiles("content/views/index.html")
-		if err != nil {
-			stdErr(c, err)
-			return
-		}
-		data := gin.H{"title": "Klitch", "now": time.Now()}
-		if err := t.Execute(c.Writer, data); err != nil {
-			stdErr(c, err)
-			return
-		}
-	})
+	g.GET("/", handlers.Index)
 
-	g.GET("/htmx/time", func(c *gin.Context) {
-		t, err := template.ParseFiles("content/views/htmx/time.html")
-		if err != nil {
-			stdErr(c, err)
-			return
-		}
-		data := gin.H{"now": time.Now()}
-		if err := t.Execute(c.Writer, data); err != nil {
-			stdErr(c, err)
-			return
-		}
-	})
+	g.GET("/htmx/time", handlers.Time)
 
 	log.Fatalln(g.Run(":8080"))
 
-}
-
-func stdErr(c *gin.Context, err error) {
-	c.JSON(500, gin.H{"path": c.Request.URL.Path, "error": err.Error()})
 }
