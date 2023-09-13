@@ -20,6 +20,7 @@ func main() {
 		data := map[string]any{"title": "Klitch", "now": time.Now()}
 		if err := t.Execute(c.Writer, data); err != nil {
 			stdErr(c, err)
+			return
 		}
 	})
 
